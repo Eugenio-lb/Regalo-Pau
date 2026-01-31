@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String
+  password    String
+  inviteCode  String   @unique @default(cuid())
+  createdAt   DateTime @default(now())
+  
+  quotes      Quote[]
+  dailyQuotes DailyQuote[]
+}
+
+model Quote {
+  id         String   @id @default(cuid())
+  userId     String
+  authorName String
+  text       String   @db.Text
+  isDefault  Boolean  @default(false)
+  usedOn     DateTime?
+  createdAt  DateTime @default(now())
+  
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dailyQuotes DailyQuote[]
+  
+  @@index([userId])
+  @@index([isDefault])
+}
+
+model DailyQuote {
+  id        String   @id @default(cuid())
+  userId    String
+  quoteId   String
+  date      DateTime @db.Date
+  createdAt DateTime @default(now())
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
+

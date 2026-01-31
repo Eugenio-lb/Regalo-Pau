@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💌 Daily Love Notes
 
-## Getting Started
+A PWA application where users receive daily motivational messages from their friends.
 
-First, run the development server:
+## 🎨 Design Features
 
+- **Minimalist Pink Theme**: Beautiful retro-inspired design with pink color palette
+- **8-bit Fonts**: Press Start 2P and VT323 fonts for a nostalgic feel  
+- **Typewriter Animation**: Messages appear with a typewriter effect
+- **PWA Ready**: Installable on mobile devices with offline support
+
+## 🏗️ Tech Stack
+
+- **Frontend**: Next.js 14 (App Router) + TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL with Prisma ORM
+- **Auth**: JWT + bcrypt
+- **PWA**: @ducanh2912/next-pwa
+- **Animations**: Framer Motion
+
+## 📊 Database Schema
+
+- **User**: The main recipient (your friend)
+- **Quote**: Motivational messages (from friends or defaults)
+- **DailyQuote**: Daily message history for calendar view
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Setup Database
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Option A: Local Postgres
+```bash
+createdb daily_love_notes
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Option B: Vercel Postgres (for production)
+```bash
+npx create-db
+```
 
-## Learn More
+### 3. Configure .env
+```env
+DATABASE_URL="postgresql://..."
+JWT_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Run Migrations
+```bash
+npx prisma migrate dev --name init
+npx prisma generate
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Start Dev Server
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📱 Pages
 
-## Deploy on Vercel
+- `/` - Landing page ✅
+- `/auth/register` - Registration (TODO)
+- `/auth/login` - Login (TODO)
+- `/dashboard` - Daily message button (TODO)
+- `/memories` - Calendar of past messages (TODO)
+- `/contribute/[code]` - Friends submit messages (TODO)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 User Flow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Main User (Your Friend):**
+1. Register → Get invite link
+2. Share with friends
+3. Click button daily for message
+4. View past messages in calendar
+
+**Friends:**
+1. Open invite link
+2. Submit motivational message
+3. See "Thanks" confirmation
+
+## 🎨 Color Palette
+
+- Primary: `#FF69B4` (Hot Pink)
+- Secondary: `#FFB6C1` (Light Pink)
+- Accent: `#FF1493` (Deep Pink)
+- Background: `#FFF5F7`
+
+## 📝 Progress
+
+### ✅ Completed
+- [x] Project setup with Next.js 14
+- [x] Tailwind configuration with pink theme
+- [x] Prisma schema design
+- [x] Landing page with 8-bit design
+- [x] PWA configuration
+- [x] Auth utilities
+
+### 🚧 Next Steps
+- [ ] Authentication pages
+- [ ] Dashboard with daily quote
+- [ ] Contribute page for friends
+- [ ] Calendar/Memory Lane
+- [ ] API routes
+- [ ] Seed default quotes
+- [ ] Deploy to Vercel
+
+## 🛠️ Commands
+
+```bash
+npm run dev          # Development server
+npm run build        # Build for production
+npx prisma studio    # Database GUI
+npx prisma generate  # Generate Prisma client
+```
+
+---
+
+Made with 💕 for Pau

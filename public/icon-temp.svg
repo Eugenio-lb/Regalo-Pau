@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="250" fill="#FFF5F7"/>
+  
+  <!-- Envelope body -->
+  <rect x="106" y="176" width="300" height="200" rx="10" fill="#FFB6C1"/>
+  
+  <!-- Envelope flap (back) -->
+  <path d="M 106 176 L 256 276 L 406 176" fill="#FF69B4" stroke="#FF1493" stroke-width="3"/>
+  
+  <!-- Envelope flap (front) -->
+  <path d="M 106 176 L 256 276 L 406 176 L 256 76 Z" fill="#FF69B4" stroke="#FF1493" stroke-width="3"/>
+  
+  <!-- Heart on envelope -->
+  <path d="M 256 240 L 246 230 C 236 220 236 204 246 194 C 256 184 270 184 280 194 L 256 240 Z" fill="#FF1493"/>
+  <path d="M 256 240 L 266 230 C 276 220 276 204 266 194 C 256 184 242 184 232 194 L 256 240 Z" fill="#FF1493"/>
+  
+  <!-- Decorative stars -->
+  <circle cx="150" cy="150" r="8" fill="#FF1493" opacity="0.6"/>
+  <circle cx="362" cy="150" r="8" fill="#FF1493" opacity="0.6"/>
+  <circle cx="150" cy="400" r="8" fill="#FF1493" opacity="0.6"/>
+  <circle cx="362" cy="400" r="8" fill="#FF1493" opacity="0.6"/>
+</svg>
