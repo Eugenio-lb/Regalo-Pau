@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getAuthCookie, clearAuthCookie } from '@/lib/cookie-auth';
 
 interface User {
   id: string;
@@ -29,31 +30,22 @@ export default function DashboardPage() {
   const [fetchingQuote, setFetchingQuote] = useState(false);
 
   useEffect(() => {
-    // Try multiple sources for token (localStorage, sessionStorage, or user data)
-    let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    // Get auth from cookies (persistent in iOS PWA)
+    const authData = getAuthCookie();
     
-    // If no token but user data exists, we're still in session
-    if (!token) {
-      const savedUser = localStorage.getItem('user');
-      if (savedUser) {
-        try {
-          const user = JSON.parse(savedUser);
-          setUser(user);
-          setLoading(false);
-          return;
-        } catch (e) {
-          // Invalid JSON, continue to login
-        }
-      }
-    }
-    
-    if (!token) {
+    if (!authData || !authData.token) {
       router.push('/auth/login');
       return;
     }
 
-    fetchUser(token);
-    checkTodayQuote(token);
+    // If we have cached user data, set it immediately
+    if (authData.user) {
+      setUser(authData.user);
+    }
+
+    // Fetch fresh data from server
+    fetchUser(authData.token);
+    checkTodayQuote(authData.token);
   }, []);
 
   const fetchUser = async (token: string) => {

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { setAuthCookie } from '@/lib/cookie-auth';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -32,12 +33,8 @@ export default function RegisterPage() {
         throw new Error(data.error || 'Registration failed');
       }
 
-      // Save token in multiple places for iOS PWA compatibility
-      localStorage.setItem('token', data.token);
-      sessionStorage.setItem('token', data.token);
-      
-      // Also save user info
-      localStorage.setItem('user', JSON.stringify(data.user));
+      // Save to cookies (works in iOS PWA)
+      setAuthCookie(data.token, data.user);
       
       router.push('/dashboard');
     } catch (err: any) {
