@@ -7,8 +7,7 @@ const nextConfig: NextConfig = {
 
 export default withPWA({
   dest: 'public',
-  register: true,
-  disable: process.env.NODE_ENV === 'development',
+  register: false, // We're using a custom service worker
 })(nextConfig);
 
 
