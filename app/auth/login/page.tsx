@@ -32,8 +32,10 @@ export default function LoginPage() {
         throw new Error(data.error || 'Login failed');
       }
 
+      console.log('✅ Login successful, saving to cookies:', data);
       // Save to cookies (works in iOS PWA)
       setAuthCookie(data.token, data.user);
+      console.log('🍪 Cookies saved, all cookies:', document.cookie);
       
       router.push('/dashboard');
     } catch (err: any) {

@@ -32,12 +32,15 @@ export default function DashboardPage() {
   useEffect(() => {
     // Get auth from cookies (persistent in iOS PWA)
     const authData = getAuthCookie();
+    console.log('🔐 Auth check:', authData ? 'Found' : 'Not found', authData);
     
     if (!authData || !authData.token) {
+      console.log('❌ No auth data, redirecting to login');
       router.push('/auth/login');
       return;
     }
 
+    console.log('✅ Auth data found, fetching user');
     // If we have cached user data, set it immediately
     if (authData.user) {
       setUser(authData.user);

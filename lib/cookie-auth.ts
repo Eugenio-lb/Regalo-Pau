@@ -1,11 +1,14 @@
 // Cookie-based auth storage for iOS PWA compatibility
 export function setAuthCookie(token: string, user: any) {
-  // Set token cookie (expires in 30 days)
-  const expiryDate = new Date();
-  expiryDate.setDate(expiryDate.getDate() + 30);
+  // For iOS PWA, we need max-age instead of expires
+  const maxAge = 30 * 24 * 60 * 60; // 30 days in seconds
   
-  document.cookie = `auth_token=${encodeURIComponent(token)}; path=/; expires=${expiryDate.toUTCString()}; SameSite=Lax`;
-  document.cookie = `auth_user=${encodeURIComponent(JSON.stringify(user))}; path=/; expires=${expiryDate.toUTCString()}; SameSite=Lax`;
+  // Use Secure only in production (HTTPS)
+  const isProduction = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  const secureFlag = isProduction ? '; Secure' : '';
+  
+  document.cookie = `auth_token=${encodeURIComponent(token)}; path=/; max-age=${maxAge}; SameSite=Lax${secureFlag}`;
+  document.cookie = `auth_user=${encodeURIComponent(JSON.stringify(user))}; path=/; max-age=${maxAge}; SameSite=Lax${secureFlag}`;
 }
 
 export function getAuthCookie() {
