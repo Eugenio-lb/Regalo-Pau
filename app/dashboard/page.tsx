@@ -29,7 +29,24 @@ export default function DashboardPage() {
   const [fetchingQuote, setFetchingQuote] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    // Try multiple sources for token (localStorage, sessionStorage, or user data)
+    let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    
+    // If no token but user data exists, we're still in session
+    if (!token) {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        try {
+          const user = JSON.parse(savedUser);
+          setUser(user);
+          setLoading(false);
+          return;
+        } catch (e) {
+          // Invalid JSON, continue to login
+        }
+      }
+    }
+    
     if (!token) {
       router.push('/auth/login');
       return;

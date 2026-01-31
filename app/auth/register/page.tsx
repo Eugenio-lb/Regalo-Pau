@@ -32,7 +32,13 @@ export default function RegisterPage() {
         throw new Error(data.error || 'Registration failed');
       }
 
+      // Save token in multiple places for iOS PWA compatibility
       localStorage.setItem('token', data.token);
+      sessionStorage.setItem('token', data.token);
+      
+      // Also save user info
+      localStorage.setItem('user', JSON.stringify(data.user));
+      
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.message);
