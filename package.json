@@ -9,6 +9,7 @@
     "lint": "eslint",
     "seed": "tsx prisma/seed.ts",
     "reset-db": "tsx scripts/reset-db.ts",
+    "clear-today": "tsx scripts/clear-today.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
