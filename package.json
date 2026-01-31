@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx prisma/seed.ts",
+    "reset-db": "tsx scripts/reset-db.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
