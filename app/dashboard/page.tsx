@@ -60,7 +60,7 @@ export default function DashboardPage() {
       setUser(data.user);
       setLoading(false);
     } catch (error) {
-      localStorage.removeItem('token');
+      clearAuthCookie();
       router.push('/auth/login');
     }
   };
@@ -88,12 +88,17 @@ export default function DashboardPage() {
 
     setFetchingQuote(true);
     setEnvelopeState('opening');
-    const token = localStorage.getItem('token');
+    
+    const authData = getAuthCookie();
+    if (!authData || !authData.token) {
+      router.push('/auth/login');
+      return;
+    }
 
     try {
       const res = await fetch('/api/quotes/daily', {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${authData.token}` },
       });
 
       if (!res.ok) throw new Error('Failed to fetch quote');
@@ -115,7 +120,7 @@ export default function DashboardPage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    clearAuthCookie();
     router.push('/');
   };
 
